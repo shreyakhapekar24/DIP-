@@ -1,14 +1,16 @@
-import cv2 
-import numpy as np 
+import cv2
 
-#read an image
+originalImage = cv2.imread('nature.jpg')
+grayImage = cv2.cvtColor(originalImage, cv2.COLOR_BGR2GRAY)
 
-img = cv2.imread("fruits.jpg")
+(thresh, blackAndWhiteImage) = cv2.threshold(grayImage, 127, 255, cv2.THRESH_BINARY)
 
-img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+subtrctImage = grayImage - blackAndWhiteImage
 
-print(img_gray.shape)
-
-cv2.imshow("window", img_gray)
+cv2.imshow('Black White Image', blackAndWhiteImage)
+cv2.imshow('Original Image', originalImage)
+cv2.imshow('Gray Image', grayImage)
+cv2.imshow('Subtracted Image', subtrctImage)
 
 cv2.waitKey(0)
+cv2.destroyAllWindows()
