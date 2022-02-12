@@ -1,29 +1,35 @@
+import numpy as np
 import cv2
-import numpy as np 
 
-#read image
-src = cv2.imread('butterfly.jpg', cv2.IMREAD_UNCHANGED)
-print(src.shape)
+# create 512x512 black images 
+img = np.zeros((512, 512, 3), np.uint8)
+img_rec = np.zeros((512, 512, 3), np.uint8)
 
-# extract green channel
-blue_channel = src[:, :, 0]
-green_channel = src[:, :, 1]
-red_channel = src[:, :, 2]
+# draw circle and rectangle on black images 
+img1 = cv2.circle(img, (256, 256), 63, (255, 255, 255), -1)
+img2 = cv2.rectangle(img_rec, (130, 130), (382, 382), (255, 255, 255), -1)
 
 
-# create empty image with same shape as that of src image
-blue_img = np.zeros(src.shape)
-green_img = np.zeros(src.shape)
-red_img = np.zeros(src.shape)
+# logical operations on images 
+# AND Operation 
+img3 = cv2.bitwise_and(img1, img2)
+# OR Operation 
+img4 = cv2.bitwise_or(img1, img2)
+# XOR Operation 
+img5 = cv2.bitwise_xor(img1, img2)
+# NOT Operation 
+img6 = cv2.bitwise_not(img1)
+img7 = cv2.bitwise_not(img2)
 
-# assign the green channel of src to empty image 
-green_img[:, :, 1] = green_channel
-blue_img[:, :, 0] = blue_channel
-red_img[:, :, 2] = red_channel
-
-# show image 
-cv2.imshow('green channel', green_img)
-cv2.imshow('blue channel', blue_img)
-cv2.imshow('red channel', red_img)
+# showing images 
+cv2.imshow("Circle", img1)
+cv2.imshow("Rectangle", img2)
+cv2.imshow("AND Operation", img3)
+cv2.imshow("OR Operation", img4)
+cv2.imshow("XOR Operation", img5)
+cv2.imshow("NOT img1", img6)
+cv2.imshow("NOT img2", img7)
 
 cv2.waitKey(0)
+cv2.destroyAllWindows()
+
